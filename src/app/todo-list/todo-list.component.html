@@ -1,0 +1,38 @@
+<div class="container">
+
+    <h1 class="text-center py-4">
+        To-Do Application
+    </h1>
+
+    <hr>
+
+    <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
+        <div class="mb-3">
+            <label for="task" class="form-label">Task</label>
+            <input type="text" placeholder="Enter Your Task Here" class="form-control" id="task" ngModel>
+            <small id="errormessage" class="form-text text-danger">Required Field</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-1 w-75">Submit</button>
+    </form>
+
+    <hr>
+
+    <table class="table ">
+        <thead>
+            <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Complete</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let t of taskArray">
+                <td>{{t.taskName}}</td>
+                <td><input type="checkbox" class="customcheckbox"></td>
+                <td><button type="submit" class="btn btn-sm btn-danger">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
