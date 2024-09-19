@@ -9,11 +9,11 @@
     <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
         <div class="mb-3">
             <label for="task" class="form-label">Task</label>
-            <input type="text" placeholder="Enter Your Task Here" class="form-control" id="task" ngModel>
-            <small id="errormessage" class="form-text text-danger">Required Field</small>
+            <input type="text" placeholder="Enter Your Task Here" class="form-control" id="task" ngModel name="task" required >
+            <small *ngIf="taskForm.invalid && taskForm.dirty" id="errormessage" class="form-text text-danger">Required Field</small>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-1 w-75">Submit</button>
+        <button type="submit" class="btn btn-primary mt-1 w-75" [disabled]="taskForm.invalid" >Submit</button>
     </form>
 
     <hr>
@@ -27,10 +27,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let t of taskArray">
+            <tr *ngFor="let t of taskArray; index as i">
                 <td>{{t.taskName}}</td>
                 <td><input type="checkbox" class="customcheckbox"></td>
-                <td><button type="submit" class="btn btn-sm btn-danger">Delete</button></td>
+                <td><button type="submit" class="btn btn-sm btn-danger" (click)="onDelete(i)">Delete</button></td>
             </tr>
         </tbody>
     </table>
