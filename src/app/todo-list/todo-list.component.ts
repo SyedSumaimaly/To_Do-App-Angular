@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 export class TodoListComponent {
 
   taskArray = [{
-    taskName: "Coffee",
+    taskName: "Sample Task",
     isCompleted: false,
   }];
 
@@ -30,15 +30,17 @@ export class TodoListComponent {
 
   onDelete(index: number) {
     console.log(index)
-
     this.taskArray.splice(index, 1)
 
   }
 
-  onCheck(index: number){
+  onCheck(index: number) {
     console.log(this.taskArray)
-
     this.taskArray[index].isCompleted = !this.taskArray[index].isCompleted;
+  }
+
+  onAllDelete() {
+    this.taskArray = [];
   }
 
 }
