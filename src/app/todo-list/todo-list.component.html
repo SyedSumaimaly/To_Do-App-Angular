@@ -3,9 +3,9 @@
     <h1 class="text-center py-4">
         To-Do Application
     </h1>
-
+  
     <hr>
-
+  
     <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
         <div class="mb-3">
             <label for="task" class="form-label">Task</label>
@@ -14,30 +14,47 @@
             <small *ngIf="taskForm.invalid && taskForm.dirty" id="errormessage" class="form-text text-danger">Required
                 Field</small>
         </div>
-
+  
         <button type="submit" class="btn btn-primary mt-1" [disabled]="taskForm.invalid">Submit</button>
     </form>
-
+  
     <hr>
-
+  
     <table class="table ">
         <thead>
             <tr>
                 <th scope="col">Task</th>
                 <th scope="col">Complete</th>
                 <th scope="col">Delete</th>
+                <th scope="col">Edit</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let t of taskArray; index as i">
-                <td >{{t.taskName}}</td>
-                <td><input (change)="onCheck(i)" type="checkbox" class="customcheckbox"></td>
-                <td><button type="submit" class="btn btn-sm btn-danger" (click)="onDelete(i)">Delete</button></td>
+                <td [ngClass]="{ 'completed-task': t.isCompleted }" >
+                    <!-- Show taskName or input field when editing -->
+                    <span *ngIf="!isEditing || editingIndex !== i">{{ t.taskName }}</span>
+                    <input *ngIf="isEditing && editingIndex === i" [(ngModel)]="editedTaskName" class="form-control" type="text">
+                </td>
+                <td>
+                    <input (change)="onCheck(i)" type="checkbox" class="customcheckbox" [checked]="t.isCompleted">
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-danger" (click)="onDelete(i)">Delete</button>
+                </td>
+                <td>
+                    <!-- Edit/Save/Cancel Buttons -->
+                    <button *ngIf="!isEditing || editingIndex !== i" type="button" class="btn btn-sm btn-warning" (click)="onEdit(i)">Edit</button>
+                    <button *ngIf="isEditing && editingIndex === i" type="button" class="btn btn-sm btn-success" (click)="onSaveEdit()">Save</button>
+                    <button *ngIf="isEditing && editingIndex === i" type="button" class="btn btn-sm mx-2 btn-secondary" (click)="cancelEdit()">Cancel</button>
+                </td>
             </tr>
         </tbody>
     </table>
+  
     <div class="container">
-        <button type="submit" class="btn fw-bolder fs-5 w-100 btn-danger" (click)="onAllDelete()">Delete All</button>
+        <button type="button" class="btn fw-bolder fs-5 w-100 btn-danger" (click)="onAllDelete()">Delete All</button>
     </div>
-
-</div>
+  
+  </div>
+  

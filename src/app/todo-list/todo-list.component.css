@@ -1,3 +1,8 @@
 .customcheckbox{
     margin-left: 30px;
 }
+
+.completed-task {
+    text-decoration: line-through;
+    color: gray;
+  }
